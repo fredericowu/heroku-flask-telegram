@@ -9,6 +9,7 @@ api = Api(app)
 api.add_resource(Message, '/api/message')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 33507))
+    port = int(os.environ.get("PORT", 5000))
+    print("Port", port)
     app.run(host='0.0.0.0', port=port, debug=True)
 
