@@ -1,0 +1,28 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[packages]
+
+aniso8601 = "*"
+gunicorn = "*"
+certifi = "*"
+click = "*"
+Flask = "*"
+Flask-REST = "*"
+Flask-RESTful = "*"
+future = "*"
+itsdangerous = "*"
+Jinja2 = "*"
+MarkupSafe = "*"
+python-telegram-bot= "*"
+pytz = "*"
+six = "*"
+Werkzeug = "*"
+
+
+[requires]
+
+python_version = "3.6"

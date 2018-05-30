@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
-from telegrambot.bot import TelegramBot
+from ..telegrambot.bot import TelegramBot
 
 
 class Message(Resource):

@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from resources.message import Message
-from telegrambot.bot import TelegramBot
+from .resources.message import Message
+from .telegrambot.bot import TelegramBot
 
 app = Flask(__name__)
 api = Api(app)
