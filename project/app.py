@@ -3,7 +3,7 @@ from flask_restful import Resource, Api
 from .resources.message import Message
 from .telegrambot.bot import TelegramBot
 import os
-
+import datetime
 
 app = Flask(__name__)
 api = Api(app)
@@ -12,7 +12,7 @@ api.add_resource(Message, '/api/message')
 
 @app.route('/')
 def homepage():
-    the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
+    the_time = datetime.datetime.now().strftime("%A, %d %b %Y %l:%M %p")
 
     return """
     <h1>Hello heroku</h1>
