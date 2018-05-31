@@ -94,7 +94,7 @@ class TelegramBot():
 
     def get_messages(self):
         messages = self.received
-        self.telegram.clean_messages()
+        self.clean_messages()
         return messages
 
 
