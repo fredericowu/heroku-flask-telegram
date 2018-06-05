@@ -10,19 +10,31 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-class TelegramBot():
+class TelegramBot:
     updater = None
     bot = None
-    received = []
+    token = None
+    messages = []
     pool_size = 100
     chats = {}
 
     def __init__(self, token=None):
-        if TelegramBot.updater is None:
-            if not token:
-                token = os.environ.get("TELEGRAM_TOKEN")
+        if not self.token:
+            if not TelegramBot.token:
+                TelegramBot.token = token
 
-            TelegramBot.updater = Updater(token=token)
+            if not TelegramBot.token:
+                TelegramBot.token = os.environ.get("TELEGRAM_TOKEN")
+
+            self.token = TelegramBot.token
+
+        if not self.token:
+            raise Exception("Telegram Bot needs a token")
+
+        if TelegramBot.updater is None:
+            logger.info("Starting Telegram Bot")
+            TelegramBot.updater = Updater(token=self.token)
+            TelegramBot.bot = TelegramBot.updater.bot
 
             handlers = {
                 CommandHandler: [
@@ -44,59 +56,75 @@ class TelegramBot():
             TelegramBot.updater.start_polling()
 
         self.updater = TelegramBot.updater
-        self.bot = self.updater.bot
+        self.bot = TelegramBot.bot
+
+    @classmethod
+    def get_chat_id(cls, to):
+        chat_id = None
+        try:
+            # check if it is an ID
+            chat_id = str(int(to))
+        except ValueError:
+            to = to.replace("@", "")
+            chats = cls.chats
+            chat_ids = list(filter(lambda a: True if chats[a]['username'] == to else False, chats))
+            if chat_ids:
+                chat_id = chat_ids[0]
+
+        return chat_id if chat_id else None
+
+    @classmethod
+    def send_message(cls, to, message):
+        chat_id = cls.get_chat_id(to)
+        if chat_id:
+            cls.bot.send_message(chat_id=chat_id, text=message)
+            cls.log_message("out", message, chat_id)
+            result = True
+
+        else:
+            result = False
+
+        return result
+
+    def clean_messages(self, in_out=None):
+        if in_out is None:
+            self.__class__.messages = []
+        else:
+            self.__class__.messages = list(filter(lambda a: a[0] != in_out, self.__class__.messages))
+
+    def get_messages(self, in_out=None):
+        if in_out is None:
+            messages = list(self.__class__.messages)
+        else:
+            messages = list(filter(lambda a: a[0] == in_out, self.__class__.messages))
+
+        self.clean_messages(in_out)
+        return messages
 
     @classmethod
     def start(cls, bot, update):
-        msg = "Hi, to know about me access https://github.com/fredericowu/heroku-flask-telegram"
-        bot.send_message(chat_id=update.message.chat_id, text=msg)
+        msg = "Hi, to know about me go to https://github.com/fredericowu/heroku-flask-telegram"
+        cls().send_message(chat_id=update.message.chat_id, text=msg)
 
     @classmethod
     def echo(cls, bot, update):
         msg = "You said: {0}".format(update.message.text)
-        bot.send_message(chat_id=update.message.chat_id, text=msg)
+        cls.send_message(update.message.chat_id, msg)
 
     @classmethod
     def __received_message(cls, bot, update):
         user = update.message.from_user
         logger.info('You talk with user {} and his user ID: {} '.format(user['username'], user['id']))
         cls.chats[user['id']] = user
+        cls.log_message("in", update.message)
 
+    @classmethod
+    def log_message(cls, in_out, message, chat_id=None):
         # TODO Let's not waste memory until we get a database
-        if len(cls.received) > cls.pool_size:
-            cls.received.pop(0)
+        if len(cls.messages) >= cls.pool_size:
+            cls.messages.pop(0)
 
-        cls.received.append(update.message)
-
-    def get_chat_id(self, to):
-        try:
-            # check if it is an ID
-            chat_id = str(int(to))
-        except ValueError:
-            to = to.replace("@", "")
-            chats = self.__class__.chats
-            chat_id = list(filter(lambda a: True if chats[a]['username'] == to else False, chats))
-
-        return chat_id[0] if chat_id else None
-
-    def send_message(self, to, message):
-        chat_id = self.get_chat_id(to)
-        if chat_id:
-            self.bot.send_message(chat_id=chat_id, text=message)
-            result = True
-        else:
-            result = False
-
-        return result
-
-    def clean_messages(self):
-        self.received = []
-
-    def get_messages(self):
-        messages = self.received
-        self.clean_messages()
-        return messages
-
+        cls.messages.append([in_out, message, chat_id])
 
 
 

@@ -1,0 +1,17 @@
+{
+  "name": "heroku-flask-telegram",
+  "description": "https://github.com/fredericowu/heroku-flask-telegram",
+  "image": "heroku/python",
+  "repository": "https://github.com/fredericowu/heroku-flask-telegram",
+  "keywords": ["python", "flask", "telegram" ],
+  "env": {
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "",
+        "test": ""
+      }
+    }
+  }
+}

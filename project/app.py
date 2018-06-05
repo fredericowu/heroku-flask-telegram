@@ -1,14 +1,15 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from .resources.message import Message
-from .telegrambot.bot import TelegramBot
 import os
 import datetime
+
 
 app = Flask(__name__)
 api = Api(app)
 
 api.add_resource(Message, '/api/message')
+
 
 @app.route('/')
 def homepage():
@@ -20,6 +21,7 @@ def homepage():
 
     <img src="http://loremflickr.com/600/400" />
     """.format(time=the_time)
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
