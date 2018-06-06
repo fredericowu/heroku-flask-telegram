@@ -48,7 +48,7 @@ $ echo $APP_URL
 $ curl ${APP_URL}"api/message"
 [["out", "You said: Banana", "55736795"], ["in", {"message_id": 55, "date": 1528251472, "chat": {"id": 55736795, "type": "private", "username": "fredericowu", "first_name": "Frederico", "last_name": "Wu"}, "text": "Banana", "entities": [], "caption_entities": [], "photo": [], "new_chat_members": [], "new_chat_photo": [], "delete_chat_photo": false, "group_chat_created": false, "supergroup_chat_created": false, "channel_chat_created": false, "from": {"id": 55736795, "first_name": "Frederico", "is_bot": false, "last_name": "Wu", "username": "fredericowu", "language_code": "pt-br"}}, null]]
 ```
-The received messages are going to be outputed in JSON format.
+The received messages are going to be outputted in JSON format.
 
 ### Send messages
 To send a message to someone the person must start the conversation first, otherwise it won't work.
