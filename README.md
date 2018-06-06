@@ -26,7 +26,7 @@ heroku open
 
 heroku scale web=1
 
-# to see the output screen
+# to see the log screen
 heroku logs --tail
 
 ```
