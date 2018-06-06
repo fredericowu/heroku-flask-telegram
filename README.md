@@ -64,7 +64,7 @@ $ curl ${APP_URL}"api/message" -d "to=55736795&message=hi" -X POST
 
 ## Your own bot
 Clone this repo and change as you wish.
-To start it on your environment use 
+To start it on your environment (not Heroku's) do as described below. 
 
 In the heroku-flask-telegram/ directory type:
 
