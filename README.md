@@ -19,8 +19,11 @@ $ cd heroku-flask-telegram
 ```
 $ heroku login
 $ heroku create
-$ heroku heroku config:set TELEGRAM_TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
 $ git push heroku master
+
+# XXXX... is the TOKEN given by the @BotFather
+$ heroku heroku config:set TELEGRAM_TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 $ heroku open
 
@@ -57,6 +60,20 @@ You can reply the above these ways:
 ```sh
 $ curl ${APP_URL}"api/message" -d "to=fredericowu&message=hey" -X POST
 $ curl ${APP_URL}"api/message" -d "to=55736795&message=hi" -X POST
+```
+
+## Your own bot
+Clone this repo and change as you wish.
+To start it on your environment use 
+
+In the heroku-flask-telegram/ directory type:
+
+```sh
+# Please, check if you have python 3
+$ python -m venv venv
+$ source venv/bin/activate
+(venv) $ pipenv install Pipenv
+(venv) $ gunicorn -e "TELEGRAM_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" -w 1 -b 0.0.0.0:5000 project.app:app
 ```
 
 
