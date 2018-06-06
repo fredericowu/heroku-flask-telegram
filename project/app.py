@@ -13,14 +13,7 @@ api.add_resource(Message, '/api/message')
 
 @app.route('/')
 def homepage():
-    the_time = datetime.datetime.now().strftime("%A, %d %b %Y %l:%M %p")
-
-    return """
-    <h1>Hello heroku</h1>
-    <p>It is currently {time}.</p>
-
-    <img src="http://loremflickr.com/600/400" />
-    """.format(time=the_time)
+    return "Hi, better page coming soon"
 
 
 if __name__ == '__main__':
