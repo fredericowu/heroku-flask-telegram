@@ -2,11 +2,11 @@
 Telegram bot as a service on Heroku
 
 
-## Setup you Bot
+## Setup your Bot
 
 ### First steps
 - Create an account on Heroku.com.
-- Create a Telegram Bot using the Bot Father. Just open the Telegram app on your phone and look for @BotFather and follow the steps. The important thing about this step is to keep the TOKEN that it gives you after you create your bot.
+- Create a Telegram Bot using the Bot Father. Just open the Telegram app on your phone, look for @BotFather and follow the steps. The important thing about this step is to keep in a safe place the TOKEN that it gives you after you create your bot.
 
 
 ### Clone this repo
@@ -33,10 +33,10 @@ $ heroku logs --tail
 
 ## Use your bot
 
-# First
+### First say "Hi"
 Look for your bot on the Telegram app and say something to it.
 
-# Get the received messages
+### Get the received messages
 
 In the heroku-flask-telegram/ directory type:
 ```sh
@@ -50,7 +50,7 @@ $ curl ${APP_URL}"api/message"
 ```
 The received messages are going to be outputed in JSON format.
 
-# Send messages
+### Send messages
 To send a message to someone the person must start the conversation first, otherwise it won't work.
 You can reply the above these ways:
 
@@ -58,4 +58,5 @@ You can reply the above these ways:
 $ curl ${APP_URL}"api/message" -d "to=fredericowu&message=hey" -X POST
 $ curl ${APP_URL}"api/message" -d "to=55736795&message=hi" -X POST
 ```
+
 
